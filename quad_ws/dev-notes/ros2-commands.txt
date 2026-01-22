@@ -1,0 +1,132 @@
+Below is a scratch pad of commands taken while learning ROS2.
+
+
+CHECK ROS ENVIRONMENT:
+	printenv | grep -i ROS
+	
+	Check installed packages:
+		sudo apt list --installed
+		sudo apt list --installed | grep screen
+
+VERIFY SETUP OR MODIFICATIONS:
+	cat ~/.bashrc
+	nano ~/.bashrc
+
+BUILD:
+	(from the workspace directory)
+	(some packages will fail without required parameters)
+	BUILD ALL:
+		colcon build
+	
+	BUILD SELECT PACKAGE: 
+		colcon build --packages-select quad_main
+	
+SOURCE:
+	SOURCE ROS:
+		source /opt/ros/foxy/setup.bash
+	SOURCE WORKSPACE:
+		(from workspace directory)
+		source install/setup.bash
+
+RUN:
+	Note: some packages will fail if using run because they require parameters provided by launch
+	ros2 run quad_main quad_main
+	ros2 run quad_simulation quad_simulation
+	
+	
+	Run with parameters:
+		ros2 run quad_main quad_main --ros-args --params-file src/quad/config/quad_params.yaml	
+
+	Build and run:
+		colcon build --packages-select quad_gamepad; ros2 run quad_gamepad quad_gamepad
+
+	Build then run with parameters:
+		colcon build --packages-select quad_gamepad; ros2 run quad_gamepad quad_gamepad --ros-args -p joystick_number:=1
+		
+LAUNCH:	
+	FROM LAUNCH FILE:		
+		1
+		
+	
+	BUILD THEN LAUNCH:
+		colcon build --packages-select quad_main; ros2 launch quad_main quad_main.launch.py	
+		colcon build --packages-select quad_motors; ros2 launch quad_motors quad_motors.launch.py	
+		
+
+
+		colcon build; ros2 launch quad_main quad_all.launch.py	
+		
+
+		RPi 4 LIVE MOTORS:
+			ros2 launch quad_main quad_live.launch.py	
+			colcon build --packages-select quad_main quad_main; ros2 launch quad_main quad_live.launch.py	
+
+
+GENERAL ROS COMMANDS:
+
+	ros2 node list
+	ros2 node info <node_name>
+
+	ros2 topic list		
+	ros2 topic echo <topic_name>
+
+	rqt_graph
+	ros2 run rqt_console rqt_console
+
+CREATE PACKAGE: 
+	(with hello world exe)
+	(inside my_workspace/src/)
+	FOR EMPTY PACKAGE:
+		ros2 pkg create my_package
+	FOR C++:
+		ros2 pkg create --build-type ament_cmake --node-name my_node my_package
+	FOR PYTHON:
+		ros2 pkg create --build-type ament_python --node-name my_node my_package
+ 
+XACRO/URDF:
+
+	TODO: update doc to reflect quad_urdf and quad_simulation separation and interaction
+
+	Create URDF with the help of RVIZ:
+		http://wiki.ros.org/urdf/Tutorials
+		Launch UDRF in RVIZ: 
+			ros2 launch quad_urdf display.launch.py
+			//ros2 launch quad_simulation urdf_in_rviz.launch.py
+
+	Build UDRF with xacro (when ready to be used for gym):
+		Download appropriate branch from: https://github.com/ros/xacro/tree/ros2
+		create new ros2 workspace, add the download to the src, then colcon build
+
+		Note: the files must be transfered to the share folder during colcon build
+		which is commanded by the setup.py script in the package folder
+		
+		Run xacro to build URDF:		
+			ros2 run xacro xacro ~/zuko/quad_ws/src/quad_simulation/quad_simulation/urdf/zuko.urdf.xacro > ~/zuko/quad_ws/src/quad_simulation/quad_simulation/urdf/zuko.urdf
+			
+		Generate xacro, build, run:
+			... ; colcon build --packages-select quad_simulation; ros2 run quad_simulation quad_simulation
+		Launch UDRF in RVIZ: 
+			ros2 launch quad_simulation urdf_in_rviz.launch.py
+
+#ADDON SOFTWARE
+	Joystick test program (GUI):
+		sudo apt-get install jstest-gtk	
+
+GENERIC NOTES:
+	General guide: https://roboticsbackend.com/ros2-yaml-params/
+	Node agnostic example: https://github.com/yossioo/ros2-yaml-unnamed-node
+	
+Scratch Pad:
+
+
+
+
+temp
+	rviz:	
+		meshfile="package://quad_urdf/stl/lower_leg.stl"
+	quad_simulation:
+		meshfile="package://stl/side_right.stl"		
+	
+	
+	
+	

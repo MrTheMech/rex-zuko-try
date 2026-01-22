@@ -1,0 +1,40 @@
+###############################################################################
+
+Immediate fixes, updates, actions:
+
+	CAD Assembly:	
+		add 50mm fan screws
+		
+	Reprint/Redesign:
+		
+				
+	Battery Holder PCB:
+		Increase mounting screw size to fit M4 course thread screws
+		
+	Documentation:
+		electronics bom
+	
+###############################################################################	
+
+Future improvements and other thoughts (for a later major revision, unplanned):
+	Add battery charging capability without removing batteries
+	Add contact sensors to feet
+	Watch lower leg and hip bearings, might need to increase size
+	Add integrated camera
+	Add face
+	Add ears
+	Add barks (speaker and amplifier)
+	Add top plate with mounting hole grid for equipment (lidar) tests
+
+###############################################################################
+		
+Temp notes:
+	Weight:
+		frame w/electronics: 1895g
+		batteries: 94g * 4 = 376g
+		top/bottom cover : 76g
+		fan: 12g
+		+misc.: 50g
+		=== ~2200g
+		
+###############################################################################

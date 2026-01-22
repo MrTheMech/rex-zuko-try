@@ -1,0 +1,78 @@
+invert_direction:
+- false
+- false
+- false
+- false
+- true
+- true
+- false
+- false
+- false
+- false
+- true
+- true
+map_joint_index_to_driver_pin:
+- 4   # Joint 0: FL Hip -> PIN4
+- 3   # Joint 1: FL Femur -> PIN3
+- 1   # Joint 2: FL Tibia -> PIN1
+- 5   # Joint 3: FR Hip -> PIN5
+- 2   # Joint 4: FR Femur -> PIN2
+- 0   # Joint 5: FR Tibia -> PIN0
+- 10  # Joint 6: BL Hip -> PIN10
+- 7   # Joint 7: BL Femur -> PIN7
+- 9   # Joint 8: BL Tibia -> PIN9
+- 11  # Joint 9: BR Hip -> PIN11
+- 6   # Joint 10: BR Femur -> PIN6
+- 8   # Joint 11: BR Tibia -> PIN8
+max_degrees:
+- 30
+- 90
+- 90
+- 30
+- 0
+- 0
+- 30
+- 90
+- 90
+- 30
+- 0
+- 0
+min_degrees:
+- -30
+- 0
+- 0
+- -30
+- -90
+- -90
+- -30
+- 0
+- 0
+- -30
+- -90
+- -90
+pulse_width_per_degree:
+- 11.5
+- 11.5
+- 11.5
+- 11.5
+- 11.5
+- 11.5
+- 11.5
+- 11.5
+- 11.5
+- 11.5
+- 11.5
+- 11.5
+zero_degrees_pulse_width:
+- 1480
+- 1550
+- 1475
+- 1450
+- 1425
+- 1480
+- 1475
+- 1510
+- 1450
+- 1490
+- 1575
+- 1565
