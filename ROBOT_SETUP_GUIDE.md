@@ -53,27 +53,48 @@ Before starting, ensure you have:
 
 Follow the **INSTALL_RPI.md** guide for complete software installation. Quick summary:
 
-### 2.1 Install Ubuntu 20.04 LTS
+### 2.1 Install Ubuntu 22.04 LTS
 - Use Raspberry Pi Imager
-- Download Ubuntu 20.04.4 LTS Server 64-bit
+- Download Ubuntu 22.04 LTS Server 64-bit
 - Default credentials: `ubuntu`/`ubuntu` (change immediately!)
 
-### 2.2 Install ROS2 Foxy
+### 2.2 Install ROS2 Humble
 ```bash
 sudo apt update
 sudo apt upgrade -y
-# Follow ROS2 Foxy installation steps from INSTALL_RPI.md
+# Follow ROS2 Humble installation steps from INSTALL_RPI.md
 ```
 
 ### 2.3 Clone and Build Repository
+
+**Option 1: Sparse Clone (Recommended - saves space):**
+```bash
+cd ~
+git clone --filter=blob:none --sparse https://github.com/reubenstr/zuko.git
+cd zuko
+git sparse-checkout set quad_ws docs scripts
+cd quad_ws
+source /opt/ros/humble/setup.bash
+colcon build
+source install/local_setup.bash
+```
+
+**Option 2: Full Clone:**
 ```bash
 cd ~
 git clone https://github.com/reubenstr/zuko.git
 cd zuko/quad_ws
-source /opt/ros/foxy/setup.bash
+source /opt/ros/humble/setup.bash
 colcon build
 source install/local_setup.bash
 ```
+
+**Note:** Sparse clone only downloads:
+- `quad_ws/` - ROS2 workspace (required)
+- `docs/` - Documentation (useful)
+- `scripts/` - Kinematics scripts (optional)
+
+This saves significant space by excluding CAD files, PCB designs, images, and videos.
 
 ### 2.4 Install Dependencies
 ```bash

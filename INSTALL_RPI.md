@@ -10,14 +10,14 @@ This guide will walk you through installing and setting up the Zuko quadruped ro
 - Network connection (Ethernet or Wi-Fi)
 - Access to the robot hardware (PCA9685 servo driver, servos, etc.)
 
-## Step 1: Install Ubuntu 20.04 LTS
+## Step 1: Install Ubuntu 22.04 LTS
 
 ### Using Raspberry Pi Imager
 
 1. Download and install [Raspberry Pi Imager](https://www.raspberrypi.org/software/)
-2. Download Ubuntu 20.04.4 LTS Server 64-bit image:
+2. Download Ubuntu 22.04 LTS Server 64-bit image:
    - Visit: https://ubuntu.com/download/raspberry-pi
-   - Download Ubuntu 20.04.4 LTS Server 64-bit
+   - Download Ubuntu 22.04 LTS Server 64-bit
 3. Write the image to your microSD card using Raspberry Pi Imager
 4. Insert the microSD card into your Raspberry Pi 4
 5. Connect power, keyboard, monitor, and network (or use headless setup)
@@ -94,7 +94,7 @@ For easier development, you can SSH into the Raspberry Pi:
 
 **Tip:** Use PuTTY (Windows) or terminal (Linux/Mac) for SSH access with copy/paste capability.
 
-## Step 3: Install ROS2 Foxy
+## Step 3: Install ROS2 Humble
 
 Follow the official ROS2 installation guide for Raspberry Pi:
 
@@ -104,28 +104,36 @@ Follow the official ROS2 installation guide for Raspberry Pi:
    sudo apt upgrade -y
    ```
 
-2. Install ROS2 Foxy base:
+2. Set locale:
+   ```bash
+   sudo apt install locales
+   sudo locale-gen en_US en_US.UTF-8
+   sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+   export LANG=en_US.UTF-8
+   ```
+
+3. Install ROS2 Humble base:
    ```bash
    sudo apt install software-properties-common
    sudo add-apt-repository universe
    sudo apt update && sudo apt install curl -y
    sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
-   sudo sh -c 'echo "deb http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list'
+   sudo sh -c 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2-latest.list > /dev/null'
    sudo apt update
-   sudo apt install ros-foxy-ros-base -y
+   sudo apt install ros-humble-ros-base -y
    ```
 
-3. Install additional ROS2 tools:
+4. Install additional ROS2 tools:
    ```bash
-   sudo apt install python3-argcomplete -y
+   sudo apt install python3-argcomplete python3-colcon-common-extensions -y
    ```
 
-4. Source ROS2:
+5. Source ROS2:
    ```bash
-   source /opt/ros/foxy/setup.bash
+   source /opt/ros/humble/setup.bash
    ```
 
-5. Verify installation:
+6. Verify installation:
    ```bash
    printenv | grep ROS
    ```
@@ -146,15 +154,31 @@ Follow the official ROS2 installation guide for Raspberry Pi:
 
 ## Step 5: Clone and Build the Repository
 
-1. Clone the Zuko repository:
+1. Clone only the required folders from the Zuko repository (saves space and time):
    ```bash
    cd ~
+   git clone --filter=blob:none --sparse https://github.com/reubenstr/zuko.git
+   cd zuko
+   git sparse-checkout set quad_ws docs scripts
+   ```
+
+   **What this does:**
+   - `--filter=blob:none` - Reduces download size by not downloading file contents initially
+   - `--sparse` - Enables sparse checkout
+   - `git sparse-checkout set` - Only downloads the specified folders:
+     - `quad_ws/` - ROS2 workspace (required)
+     - `docs/` - Documentation (useful)
+     - `scripts/` - Kinematics scripts (optional but useful)
+
+   **Alternative:** If you want the full repository:
+   ```bash
    git clone https://github.com/reubenstr/zuko.git
    ```
 
-   **OR** if you have the repository locally, copy it to the Pi:
+   **OR** if you have the repository locally, copy only needed folders to the Pi:
    ```bash
-   scp -r /path/to/rex-zuko-try ubuntu@<PI_IP>:/home/ubuntu/zuko
+   scp -r /path/to/zuko/quad_ws ubuntu@<PI_IP>:/home/ubuntu/zuko/
+   scp -r /path/to/zuko/docs ubuntu@<PI_IP>:/home/ubuntu/zuko/  # Optional
    ```
 
 2. Navigate to the workspace:
@@ -164,15 +188,10 @@ Follow the official ROS2 installation guide for Raspberry Pi:
 
 3. Source ROS2:
    ```bash
-   source /opt/ros/foxy/setup.bash
+   source /opt/ros/humble/setup.bash
    ```
 
-4. Install colcon build tools:
-   ```bash
-   sudo apt install python3-colcon-common-extensions -y
-   ```
-
-5. Build the workspace:
+4. Build the workspace:
    ```bash
    colcon build
    ```
@@ -189,7 +208,7 @@ Follow the official ROS2 installation guide for Raspberry Pi:
 Add ROS2 and workspace sourcing to your `.bashrc` for automatic setup on login:
 
 ```bash
-echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 echo "cd ~/zuko/quad_ws" >> ~/.bashrc
 echo "source install/local_setup.bash" >> ~/.bashrc
 ```
@@ -427,7 +446,7 @@ If ROS2 commands don't work:
 
 1. Source ROS2:
    ```bash
-   source /opt/ros/foxy/setup.bash
+   source /opt/ros/humble/setup.bash
    ```
 
 2. Verify installation:
@@ -510,6 +529,6 @@ For issues and questions:
 
 ---
 
-**Note:** This installation guide is based on Ubuntu 20.04 LTS and ROS2 Foxy. If you're using a different version, adjust the commands accordingly.
+**Note:** This installation guide is based on Ubuntu 22.04 LTS and ROS2 Humble. If you're using a different version, adjust the commands accordingly.
 
 **Last Updated:** Based on project structure and setup notes

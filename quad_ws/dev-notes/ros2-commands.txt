@@ -23,7 +23,7 @@ BUILD:
 	
 SOURCE:
 	SOURCE ROS:
-		source /opt/ros/foxy/setup.bash
+		source /opt/ros/humble/setup.bash
 	SOURCE WORKSPACE:
 		(from workspace directory)
 		source install/setup.bash

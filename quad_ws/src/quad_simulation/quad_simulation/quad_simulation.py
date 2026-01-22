@@ -13,7 +13,6 @@ import numpy as np
 import copy
 from rclpy.executors import SingleThreadedExecutor
 from quad_interfaces.msg import JointAngles
-from rclpy.logging import LoggingSeverity
 
 from src.gym_env import GymEnv
 from src.gui_param_control import GuiParamControl
@@ -65,8 +64,8 @@ class JointAnglesSubscriber(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    rclpy.logging._root_logger.log(
-        "QUAD_SIMULATION STARTED", LoggingSeverity.INFO)
+    logger = rclpy.logging.get_logger('quad_simulation')
+    logger.info("QUAD_SIMULATION STARTED")
 
     joint_angles_subscriber = JointAnglesSubscriber()
     executor = SingleThreadedExecutor()

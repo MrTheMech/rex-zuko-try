@@ -17,7 +17,6 @@ from math import modf
 
 import rclpy
 from rclpy.node import Node
-from rclpy.logging import LoggingSeverity
 from sensor_msgs.msg import Joy
 from std_msgs.msg import Header
 
@@ -26,11 +25,11 @@ class GamepadPublisher(Node):
 
     def __init__(self):
         super().__init__('quad_gamepad')        
-        rclpy.logging._root_logger.log("quad_gamepad startup.", LoggingSeverity.INFO)
+        self.get_logger().info("quad_gamepad startup.")
 
         self.declare_parameter('joystick_number', 0)        
         self.joystick_number = self.get_parameter('joystick_number').value     
-        rclpy.logging._root_logger.log(f"Joystick number: {str(self.joystick_number)}", LoggingSeverity.INFO)
+        self.get_logger().info(f"Joystick number: {str(self.joystick_number)}")
        
         # Joy message
         self.joy = Joy()
@@ -60,10 +59,10 @@ class GamepadPublisher(Node):
 
         # Wait for a connection      
         while not Gamepad.available(self.joystick_number):
-            rclpy.logging._root_logger.log("Gamepad not detected...", LoggingSeverity.WARN)
+            self.get_logger().warn("Gamepad not detected...")
             time.sleep(1.0)
         
-        rclpy.logging._root_logger.log("Gamepad connected.", LoggingSeverity.INFO)
+        self.get_logger().info("Gamepad connected.")
         gamepad = gamepadType(self.joystick_number)              
         gamepad.startBackgroundUpdates()
 

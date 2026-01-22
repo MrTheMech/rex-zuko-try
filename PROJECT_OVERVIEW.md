@@ -343,15 +343,16 @@ cd quad_ws/src/quad_motors/quad_motors/
 ## Technical Details
 
 ### ROS2 Version
-- **Distribution:** Foxy Fitzroy
-- **Python Version:** Python 3.8+
+- **Distribution:** Humble Hawksbill (LTS)
+- **Python Version:** Python 3.10+
 
 ### Dependencies
-- **ROS2:** Foxy desktop (desktop) or ros-base (RPi)
+- **ROS2:** Humble desktop (desktop) or ros-base (RPi)
 - **Python:** numpy, yaml, rclpy
 - **Hardware:** smbus2 (for I2C on RPi)
 - **Simulation:** pybullet, gym (desktop only)
 - **Bluetooth:** pi-bluetooth (RPi for wireless controller)
+- **OS:** Ubuntu 22.04 LTS (required for Humble)
 
 ### Communication
 - **Topics:**

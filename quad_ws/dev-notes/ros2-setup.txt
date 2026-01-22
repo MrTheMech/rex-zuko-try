@@ -1,8 +1,8 @@
 General instructions to setup Ubuntu, and ROS2 on Desktop and RPi.
 
-Install Ubuntu 20.04.0x LTS and setup Wi-Fi:
+Install Ubuntu 22.04 LTS and setup Wi-Fi:
 	RPi:
-		Use Raspberry Pi Imager to install Ubuntu 20.04.4 LTS Server 64-bit
+		Use Raspberry Pi Imager to install Ubuntu 22.04 LTS Server 64-bit
 		First time boot user/pass: ubuntu/ubuntu
 		Change to ubuntu/password (or your preference)
 	Desktop:
@@ -33,24 +33,33 @@ Install Ubuntu 20.04.0x LTS and setup Wi-Fi:
 Tip:
 	Use Putty to SSH into RPi for copy/paste ability of commands.
 	
-Install ROS2 Foxy:
+Install ROS2 Humble:
 	RPi:
-		https://roboticsbackend.com/install-ros2-on-raspberry-pi/
+		Follow official ROS2 Humble installation guide for Raspberry Pi
+		See INSTALL_RPI.md for detailed steps
 	Desktop:
-		https://roboticsbackend.com/install-ros2-on-raspberry-pi/
+		Follow official ROS2 Humble installation guide
 		Instead of installing ros-base install the desktop version:		
-			sudo apt install ros-foxy-desktop
+			sudo apt install ros-humble-desktop
 	
 Clone repository and build:
-	RPi & Desktop:	  	
-		git clone https://github.com/reubenstr/zuko
-		cd zuko/quad_ws	
-		source /opt/ros/foxy/setup.bash	
+	RPi & Desktop (Sparse clone - recommended for RPi):
+		git clone --filter=blob:none --sparse https://github.com/reubenstr/zuko
+		cd zuko
+		git sparse-checkout set quad_ws docs scripts
+		cd quad_ws
+		source /opt/ros/humble/setup.bash	
 		colcon build
 	
-At every startup, soure ROS, CD into the workspace, and source the workspace automatically:
+	RPi & Desktop (Full clone):
+		git clone https://github.com/reubenstr/zuko
+		cd zuko/quad_ws	
+		source /opt/ros/humble/setup.bash	
+		colcon build
+	
+At every startup, source ROS, CD into the workspace, and source the workspace automatically:
 	RPi & Desktop:
-		echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
+		echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 		echo "cd zuko/quad_ws" >> ~/.bashrc
 		echo "source install/local_setup.bash" >> ~/.bashrc
 

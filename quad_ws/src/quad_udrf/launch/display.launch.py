@@ -9,7 +9,7 @@ from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
-    package_path = get_package_share_path('quad_urdf')
+    package_path = get_package_share_path('quad_udrf')
     default_model_path = package_path / 'urdf/zuko.urdf.xacro'
     default_rviz_config_path = package_path / 'rviz/urdf.rviz'
 

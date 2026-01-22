@@ -13,7 +13,6 @@ import sys
 import yaml
 from rclpy.executors import SingleThreadedExecutor
 from quad_interfaces.msg import JointAngles
-from rclpy.logging import LoggingSeverity
 from src.servo_controller import ServoController
 
 class JointAnglesSubscriber(Node):
@@ -37,7 +36,8 @@ class JointAnglesSubscriber(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    rclpy.logging._root_logger.log("QUAD_MOTORS STARTED", LoggingSeverity.INFO)
+    logger = rclpy.logging.get_logger('quad_motors')
+    logger.info("QUAD_MOTORS STARTED")
     
     joint_angles_subscriber = JointAnglesSubscriber()
     executor = SingleThreadedExecutor()   
@@ -50,14 +50,13 @@ def main(args=None):
     servo_parameters_path = joint_angles_subscriber.get_parameter(
         'servo_parameters_path').get_parameter_value().string_value
    
-    rclpy.logging._root_logger.log(
-        "servo_parameters_path: " + servo_parameters_path, LoggingSeverity.INFO)
+    logger.info(f"servo_parameters_path: {servo_parameters_path}")
     
     try:       
         with open(servo_parameters_path, 'r') as stream:
             servo_parameters = yaml.safe_load(stream)
     except: 
-        rclpy.logging._root_logger.log("Failed to load parameters from file. Please run servo_calibration.py", LoggingSeverity.FATAL)
+        logger.fatal("Failed to load parameters from file. Please run servo_calibration.py")
         sys.exit(1)
 
     servo_controller = ServoController(1, 0x40, servo_parameters) 

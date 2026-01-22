@@ -12,7 +12,6 @@ import numpy as np
 import copy
 from rclpy.executors import SingleThreadedExecutor
 from quad_interfaces.msg import Outputs
-from rclpy.logging import LoggingSeverity
 
   
 class OutputsSubscriber(Node):
@@ -35,8 +34,8 @@ class OutputsSubscriber(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    rclpy.logging._root_logger.log(
-        "QUAD_OUTPUT STARTED", LoggingSeverity.INFO)
+    logger = rclpy.logging.get_logger('quad_output')
+    logger.info("QUAD_OUTPUT STARTED")
 
     outputs_subscriber = OutputsSubscriber()
     executor = SingleThreadedExecutor()

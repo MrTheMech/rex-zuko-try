@@ -14,7 +14,6 @@ from os import path, read
 from rclpy.executors import SingleThreadedExecutor
 from sensor_msgs.msg import Joy
 from quad_interfaces.msg import JointAngles
-from rclpy.logging import LoggingSeverity
 from rclpy.parameter import Parameter
 
 from src.quad_commander import QuadCommander
@@ -64,9 +63,10 @@ class JointAnglesPublisher(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    rclpy.logging._root_logger.log("QUAD STARTED", LoggingSeverity.INFO)
+    logger = rclpy.logging.get_logger('quad_main')
 
     joint_angles_publisher_node = JointAnglesPublisher()
+    logger.info("QUAD STARTED")
     
     joint_angles_publisher_node.declare_parameters(
         namespace='',
@@ -82,12 +82,9 @@ def main(args=None):
     linked_leg_parameters_path = joint_angles_publisher_node.get_parameter(
         'linked_leg_parameters_path').get_parameter_value().string_value       
     
-    rclpy.logging._root_logger.log(
-        "motion_parameters_path: " + motion_parameters_path, LoggingSeverity.INFO)
-    rclpy.logging._root_logger.log(
-        "frame_parameters_path: " + frame_parameters_path, LoggingSeverity.INFO)
-    rclpy.logging._root_logger.log(
-        "linked_leg_parameters_path: " + linked_leg_parameters_path, LoggingSeverity.INFO)
+    logger.info(f"motion_parameters_path: {motion_parameters_path}")
+    logger.info(f"frame_parameters_path: {frame_parameters_path}")
+    logger.info(f"linked_leg_parameters_path: {linked_leg_parameters_path}")
   
     # TODO: catch exception if file not found
     if path.exists(motion_parameters_path):
