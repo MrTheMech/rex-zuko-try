@@ -45,22 +45,22 @@ Install ROS2 Humble:
 Clone repository and build:
 	RPi & Desktop (Sparse clone - recommended for RPi):
 		git clone --filter=blob:none --sparse https://github.com/reubenstr/zuko
-		cd zuko
+		cd rex-zuko-try
 		git sparse-checkout set quad_ws docs scripts
 		cd quad_ws
 		source /opt/ros/humble/setup.bash	
 		colcon build
 	
 	RPi & Desktop (Full clone):
-		git clone https://github.com/reubenstr/zuko
-		cd zuko/quad_ws	
+		git clone https://github.com/MrTheMech/rex-zuko-try
+		cd rex-zuko-try/quad_ws	
 		source /opt/ros/humble/setup.bash	
 		colcon build
 	
 At every startup, source ROS, CD into the workspace, and source the workspace automatically:
 	RPi & Desktop:
 		echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-		echo "cd zuko/quad_ws" >> ~/.bashrc
+		echo "cd rex-zuko-try/quad_ws" >> ~/.bashrc
 		echo "source install/local_setup.bash" >> ~/.bashrc
 
 RPi only:

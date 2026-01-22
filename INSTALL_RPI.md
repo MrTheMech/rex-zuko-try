@@ -158,7 +158,7 @@ Follow the official ROS2 installation guide for Raspberry Pi:
    ```bash
    cd ~
    git clone --filter=blob:none --sparse https://github.com/MrTheMech/rex-zuko-try.git
-   cd zuko
+   cd rex-zuko-try
    git sparse-checkout set quad_ws docs scripts
    ```
 
