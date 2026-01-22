@@ -157,7 +157,7 @@ Follow the official ROS2 installation guide for Raspberry Pi:
 1. Clone only the required folders from the Zuko repository (saves space and time):
    ```bash
    cd ~
-   git clone --filter=blob:none --sparse https://github.com/reubenstr/zuko.git
+   git clone --filter=blob:none --sparse https://github.com/MrTheMech/rex-zuko-try.git
    cd zuko
    git sparse-checkout set quad_ws docs scripts
    ```
@@ -172,7 +172,7 @@ Follow the official ROS2 installation guide for Raspberry Pi:
 
    **Alternative:** If you want the full repository:
    ```bash
-   git clone https://github.com/reubenstr/zuko.git
+   git clone https://github.com/MrTheMech/rex-zuko-try.git
    ```
 
    **OR** if you have the repository locally, copy only needed folders to the Pi:

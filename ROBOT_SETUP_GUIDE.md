@@ -70,7 +70,7 @@ sudo apt upgrade -y
 **Option 1: Sparse Clone (Recommended - saves space):**
 ```bash
 cd ~
-git clone --filter=blob:none --sparse https://github.com/reubenstr/zuko.git
+git clone --filter=blob:none --sparse https://github.com/MrTheMech/rex-zuko-try.git
 cd zuko
 git sparse-checkout set quad_ws docs scripts
 cd quad_ws
@@ -82,7 +82,7 @@ source install/local_setup.bash
 **Option 2: Full Clone:**
 ```bash
 cd ~
-git clone https://github.com/reubenstr/zuko.git
+git clone https://github.com/MrTheMech/rex-zuko-try.git
 cd zuko/quad_ws
 source /opt/ros/humble/setup.bash
 colcon build
