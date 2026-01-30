@@ -1,13 +1,28 @@
 from ament_index_python.packages import get_package_share_path
 from launch import LaunchDescription
 from launch_ros.actions import Node
+import os
+
+def get_source_config_path(launch_file_dir, package_name, config_file):
+    """Get config path from source directory, with fallback to install directory."""
+    # Navigate from quad_main/launch to workspace src directory
+    workspace_src = os.path.realpath(os.path.join(launch_file_dir, '..', '..'))
+    source_path = os.path.join(workspace_src, package_name, 'config', config_file)
+    
+    if os.path.exists(source_path):
+        return source_path
+    # Fallback to install directory for deployed systems
+    return str(get_package_share_path(package_name) / 'config' / config_file)
 
 def generate_launch_description():
     ld = LaunchDescription()
     
-    motion_parameters_path = str(get_package_share_path('quad_main') / 'config' / 'motion_parameters.yaml')
-    frame_parameters_path = str(get_package_share_path('quad_main') / 'config' / 'frame_parameters.yaml')
-    linked_leg_parameters_path = str(get_package_share_path('quad_main') / 'config' / 'linked_leg_parameters.yaml')  
+    # Get config paths from SOURCE directory so changes take effect immediately
+    launch_file_dir = os.path.dirname(os.path.realpath(__file__))
+    
+    motion_parameters_path = get_source_config_path(launch_file_dir, 'quad_main', 'motion_parameters.yaml')
+    frame_parameters_path = get_source_config_path(launch_file_dir, 'quad_main', 'frame_parameters.yaml')
+    linked_leg_parameters_path = get_source_config_path(launch_file_dir, 'quad_main', 'linked_leg_parameters.yaml')
         
     quad_main=Node(
         package = 'quad_main',
