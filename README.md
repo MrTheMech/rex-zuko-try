@@ -1,26 +1,26 @@
 # Zuko - A quadruped robot dog!
 
-<img src="https://github.com/reubenstr/Zuko/blob/main/images/v2.2/cad/zuko-v2.2-cad-render-side.png" width="640"> | 
+<img src="https://github.com/reubenstr/rex-zuko-try/blob/main/images/v2.2/cad/zuko-v2.2-cad-render-side.png" width="640"> | 
 ------------ | 
 Frame v2.2 CAD design. |
 
-<img src="https://github.com/reubenstr/Zuko/blob/main/images/general/zuko-mini-australian-shepard.jpg" width="640"> | 
+<img src="https://github.com/reubenstr/rex-zuko-try/blob/main/images/general/zuko-mini-australian-shepard.jpg" width="640"> | 
 ------------ | 
 Zuko himself! |
 
-<img src="https://github.com/reubenstr/Zuko/blob/main/images/v2.1/assembling/zuko-robot-dog-printed-parts-exploded-v2.1.jpg" width="640"> | 
+<img src="https://github.com/reubenstr/rex-zuko-try/blob/main/images/v2.1/assembling/zuko-robot-dog-printed-parts-exploded-v2.1.jpg" width="640"> | 
 ------------ | 
 Frame v2.1 parts printed. |
 
-<img src="https://github.com/reubenstr/Zuko/blob/main/pcbs/expansion-board/expansion-board-prototype-render.png" width="640"> | 
+<img src="https://github.com/reubenstr/rex-zuko-try/blob/main/pcbs/expansion-board/expansion-board-prototype-render.png" width="640"> | 
 ------------ | 
 Expansion board v1 for direct RPi inteface. |
 
-<img src="https://github.com/reubenstr/Zuko/blob/main/images/v2.1/testing/zuko-v2.1-first-time-standing-2.jpg" width="640"> | 
+<img src="https://github.com/reubenstr/rex-zuko-try/blob/main/images/v2.1/testing/zuko-v2.1-first-time-standing-2.jpg" width="640"> | 
 ------------ | 
 Frame v2.1 first time standing. |
 
-<img src="https://github.com/reubenstr/Zuko/blob/main/images/v2.1/assembling/zuko-v2.1-linked-leg-bridge-bearing-assembly-front.jpg" width="640"> | 
+<img src="https://github.com/reubenstr/rex-zuko-try/blob/main/images/v2.1/assembling/zuko-v2.1-linked-leg-bridge-bearing-assembly-front.jpg" width="640"> | 
 ------------ | 
 Frame v2.1 upper leg's servo horn, linked leg bridge, and bridge bearing press fit together. |
 

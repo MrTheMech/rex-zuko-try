@@ -89,7 +89,7 @@ def main(args=None):
     # Default parameters (generated when parameters file does not exist).
     # Matches Zuko's frame (v2.2) parameters.
     parameters = {"zero_degrees_pulse_width": [1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500],
-                        "pulse_width_per_degree": [11.5, 11.5, 11.5, 11.5, 11.5, 11.5, 11.5, 11.5, 11.5, 11.5, 11.5, 11.5],
+                        "pulse_width_per_degree": [7.41, 7.41, 7.41, 7.41, 7.41, 7.41, 7.41, 7.41, 7.41, 7.41, 7.41, 7.41],
                         "invert_direction": [False, False, False, False, True, True, False, False, False, False, True, True],
                         "min_degrees": [-30, 0, 0, -30, 0, 0, -30, 0, 0, -30, 0, 0], 
                         "max_degrees": [30, 90, 90, 30, 90, 90, 30, 90, 90, 30, 90, 90],                     
@@ -97,8 +97,8 @@ def main(args=None):
 
     motion_servo_parameters_path = "../config/servo_parameters.yaml" 
     servo_pulse_widths = parameters['zero_degrees_pulse_width']
-    servo_min_pulse_width = 250
-    servo_max_pulse_width = 2750
+    servo_min_pulse_width = 500   # DS3218SSG Pro minimum
+    servo_max_pulse_width = 2500  # DS3218SSG Pro maximum
     min_degrees = -180.0
     max_degrees = 180.0 
     selected_servo = 0

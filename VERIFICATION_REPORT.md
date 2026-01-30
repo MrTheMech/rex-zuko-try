@@ -158,7 +158,7 @@ All checks completed - Upgrade verified complete ✅
 2. **Install ROS2 Humble** (follow updated INSTALL_RPI.md)
 3. **Build workspace:**
    ```bash
-   cd ~/zuko/quad_ws
+   cd ~/rex-zuko-try/quad_ws
    source /opt/ros/humble/setup.bash
    colcon build
    source install/local_setup.bash

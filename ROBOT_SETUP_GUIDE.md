@@ -125,7 +125,7 @@ sudo i2cdetect -y 1
 
 ### 3.2 Run Calibration
 ```bash
-cd ~/zuko/quad_ws/src/quad_motors/quad_motors/
+cd ~/rex-zuko-try/quad_ws/src/quad_motors/quad_motors/
 chmod +x servo_calibration.py
 ./servo_calibration.py
 ```
@@ -154,7 +154,7 @@ Expected joint limits (adjust based on your frame):
 
 ### 3.5 Verify Calibration File
 ```bash
-cat ~/zuko/quad_ws/src/quad_motors/config/servo_parameters.yaml
+cat ~/rex-zuko-try/quad_ws/src/quad_motors/config/servo_parameters.yaml
 # Verify all values are set correctly
 ```
 
@@ -201,14 +201,14 @@ sudo i2cdetect -y 1
 
 **Test Servo Communication:**
 ```bash
-cd ~/zuko/quad_ws/src/quad_motors/quad_motors/
+cd ~/rex-zuko-try/quad_ws/src/quad_motors/quad_motors/
 ./servo_calibration.py
 # Use "zero_all" command to set all servos to zero
 ```
 
 **Test Gamepad:**
 ```bash
-cd ~/zuko/quad_ws
+cd ~/rex-zuko-try/quad_ws
 source install/local_setup.bash
 ros2 run quad_gamepad quad_gamepad --ros-args -p joystick_number:=0
 # In another terminal:
@@ -220,14 +220,14 @@ ros2 topic echo /joy
 
 **Start with simulation to verify software:**
 ```bash
-cd ~/zuko/quad_ws
+cd ~/rex-zuko-try/quad_ws
 source install/local_setup.bash
 ros2 launch quad_main quad_all.launch.py
 ```
 
 **For live robot operation:**
 ```bash
-cd ~/zuko/quad_ws
+cd ~/rex-zuko-try/quad_ws
 source install/local_setup.bash
 ros2 launch quad_main quad_live.launch.py
 ```
@@ -255,7 +255,7 @@ rqt_graph
 
 Edit motion parameters for your specific robot:
 ```bash
-nano ~/zuko/quad_ws/src/quad_main/config/motion_parameters.yaml
+nano ~/rex-zuko-try/quad_ws/src/quad_main/config/motion_parameters.yaml
 ```
 
 Key parameters to adjust:
@@ -269,14 +269,14 @@ Key parameters to adjust:
 
 If your frame dimensions differ, update:
 ```bash
-nano ~/zuko/quad_ws/src/quad_main/config/frame_parameters.yaml
+nano ~/rex-zuko-try/quad_ws/src/quad_main/config/frame_parameters.yaml
 ```
 
 ### 6.3 Servo Parameters
 
 If you need to adjust servo calibration:
 ```bash
-cd ~/zuko/quad_ws/src/quad_motors/quad_motors/
+cd ~/rex-zuko-try/quad_ws/src/quad_motors/quad_motors/
 ./servo_calibration.py
 ```
 
@@ -287,7 +287,7 @@ To automatically start the robot on boot:
 1. Create a systemd service (advanced) or
 2. Add to `.bashrc`:
 ```bash
-echo "cd ~/zuko/quad_ws && source install/local_setup.bash && ros2 launch quad_main quad_live.launch.py" >> ~/.bashrc
+echo "cd ~/rex-zuko-try/quad_ws && source install/local_setup.bash && ros2 launch quad_main quad_live.launch.py" >> ~/.bashrc
 ```
 
 **Note:** Auto-start is not recommended until you've thoroughly tested the robot.
@@ -309,7 +309,7 @@ echo "cd ~/zuko/quad_ws && source install/local_setup.bash && ros2 launch quad_m
 
 3. **Verify servo calibration file exists:**
    ```bash
-   ls ~/zuko/quad_ws/src/quad_motors/config/servo_parameters.yaml
+   ls ~/rex-zuko-try/quad_ws/src/quad_motors/config/servo_parameters.yaml
    ```
 
 4. **Check servo power supply:**
@@ -341,7 +341,7 @@ echo "cd ~/zuko/quad_ws && source install/local_setup.bash && ros2 launch quad_m
 
 1. **Rebuild workspace:**
    ```bash
-   cd ~/zuko/quad_ws
+   cd ~/rex-zuko-try/quad_ws
    colcon build
    source install/local_setup.bash
    ```
@@ -377,7 +377,7 @@ After successful setup:
 
 ```bash
 # Build workspace
-cd ~/zuko/quad_ws
+cd ~/rex-zuko-try/quad_ws
 colcon build
 
 # Source workspace

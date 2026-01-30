@@ -65,7 +65,7 @@ Successfully upgraded the Zuko robot codebase from ROS2 Foxy to ROS2 Humble.
 
 ### 3. Build Workspace
 ```bash
-cd ~/zuko/quad_ws
+cd ~/rex-zuko-try/quad_ws
 source /opt/ros/humble/setup.bash
 colcon build
 source install/local_setup.bash

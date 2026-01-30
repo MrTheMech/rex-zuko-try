@@ -101,7 +101,7 @@ XACRO/URDF:
 		which is commanded by the setup.py script in the package folder
 		
 		Run xacro to build URDF:		
-			ros2 run xacro xacro ~/zuko/quad_ws/src/quad_simulation/quad_simulation/urdf/zuko.urdf.xacro > ~/zuko/quad_ws/src/quad_simulation/quad_simulation/urdf/zuko.urdf
+			ros2 run xacro xacro ~/rex-zuko-try/quad_ws/src/quad_simulation/quad_simulation/urdf/zuko.urdf.xacro > ~/rex-zuko-try/quad_ws/src/quad_simulation/quad_simulation/urdf/zuko.urdf
 			
 		Generate xacro, build, run:
 			... ; colcon build --packages-select quad_simulation; ros2 run quad_simulation quad_simulation

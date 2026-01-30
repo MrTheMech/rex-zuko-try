@@ -57,8 +57,8 @@ class PCA9685Servos:
         self.address = device_address
         self.reference_clock_speed_hz = 25000000
         self.pwm_frequency_hz = 50  
-        self.min_pulse_width = 0
-        self.max_pulse_width = 3000      
+        self.min_pulse_width = 500  # DS3218SSG Pro minimum
+        self.max_pulse_width = 2500  # DS3218SSG Pro maximum      
                    
         bus = SMBus(self.bus_index)      
         # Set PWM frequency

@@ -177,13 +177,13 @@ Follow the official ROS2 installation guide for Raspberry Pi:
 
    **OR** if you have the repository locally, copy only needed folders to the Pi:
    ```bash
-   scp -r /path/to/zuko/quad_ws ubuntu@<PI_IP>:/home/ubuntu/zuko/
-   scp -r /path/to/zuko/docs ubuntu@<PI_IP>:/home/ubuntu/zuko/  # Optional
+   scp -r /path/to/rex-zuko-try/quad_ws ubuntu@<PI_IP>:/home/ubuntu/rex-zuko-try/
+   scp -r /path/to/rex-zuko-try/docs ubuntu@<PI_IP>:/home/ubuntu/rex-zuko-try/  # Optional
    ```
 
 2. Navigate to the workspace:
    ```bash
-   cd ~/zuko/quad_ws
+   cd ~/rex-zuko-try/quad_ws
    ```
 
 3. Source ROS2:
@@ -209,7 +209,7 @@ Add ROS2 and workspace sourcing to your `.bashrc` for automatic setup on login:
 
 ```bash
 echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-echo "cd ~/zuko/quad_ws" >> ~/.bashrc
+echo "cd ~/rex-zuko-try/quad_ws" >> ~/.bashrc
 echo "source install/local_setup.bash" >> ~/.bashrc
 ```
 
@@ -298,7 +298,7 @@ If you want to use a wireless PS4 controller:
 
 1. Navigate to the servo calibration script:
    ```bash
-   cd ~/zuko/quad_ws/src/quad_motors/quad_motors/
+   cd ~/rex-zuko-try/quad_ws/src/quad_motors/quad_motors/
    ```
 
 2. Make the script executable:
@@ -318,7 +318,7 @@ If you want to use a wireless PS4 controller:
 
 5. Verify the calibration file was created:
    ```bash
-   ls ~/zuko/quad_ws/src/quad_motors/config/servo_parameters.yaml
+   ls ~/rex-zuko-try/quad_ws/src/quad_motors/config/servo_parameters.yaml
    ```
 
 ## Step 10: Verify Installation
@@ -356,7 +356,7 @@ If you want to use a wireless PS4 controller:
 
 2. Launch the robot:
    ```bash
-   cd ~/zuko/quad_ws
+   cd ~/rex-zuko-try/quad_ws
    source install/local_setup.bash
    ros2 launch quad_main quad_live.launch.py
    ```
@@ -415,13 +415,13 @@ If you get an error about missing servo parameters:
 
 1. Run the calibration script:
    ```bash
-   cd ~/zuko/quad_ws/src/quad_motors/quad_motors/
+   cd ~/rex-zuko-try/quad_ws/src/quad_motors/quad_motors/
    ./servo_calibration.py
    ```
 
 2. Verify the file exists:
    ```bash
-   ls ~/zuko/quad_ws/src/quad_motors/config/servo_parameters.yaml
+   ls ~/rex-zuko-try/quad_ws/src/quad_motors/config/servo_parameters.yaml
    ```
 
 ### Build Errors
@@ -435,7 +435,7 @@ If you get an error about missing servo parameters:
 
 2. Clean and rebuild:
    ```bash
-   cd ~/zuko/quad_ws
+   cd ~/rex-zuko-try/quad_ws
    rm -rf build install log
    colcon build
    ```
