@@ -17,6 +17,7 @@ setup(
         (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),      
 
         (os.path.join('lib', package_name, 'src'), glob(package_name + '/src/*.py')), 
+        (os.path.join('lib', package_name, 'src', 'lib'), glob(package_name + '/src/lib/*.py')),  # DS3218SSG Pro driver
         (os.path.join('lib', package_name, 'stl'), glob(package_name + '/stl/*.stl')),
         (os.path.join('lib', package_name, 'urdf'), glob(package_name + '/urdf/*.*')),  
     ],
