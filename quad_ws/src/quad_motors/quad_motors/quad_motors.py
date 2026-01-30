@@ -45,7 +45,7 @@ def main(args=None):
 
     joint_angles_subscriber.declare_parameters(
         namespace='',
-        parameters=[('servo_parameters_path', None)])
+        parameters=[('servo_parameters_path', '')])
 
     servo_parameters_path = joint_angles_subscriber.get_parameter(
         'servo_parameters_path').get_parameter_value().string_value

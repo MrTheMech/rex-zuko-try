@@ -71,9 +71,9 @@ def main(args=None):
     joint_angles_publisher_node.declare_parameters(
         namespace='',
         parameters=[      
-            ('motion_parameters_path', None),   
-            ('frame_parameters_path', None),
-            ('linked_leg_parameters_path', None)])
+            ('motion_parameters_path', ''),   
+            ('frame_parameters_path', ''),
+            ('linked_leg_parameters_path', '')])
    
     motion_parameters_path = joint_angles_publisher_node.get_parameter(
         'motion_parameters_path').get_parameter_value().string_value
