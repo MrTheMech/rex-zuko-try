@@ -115,47 +115,77 @@ sudo i2cdetect -y 1
 # Should show PCA9685 at address 0x40
 ```
 
-## Step 3: Servo Calibration
+## Step 3: Servo Calibration (DS3218SSG Pro)
 
-**CRITICAL:** You must calibrate all servos before running the robot!
+**Good News:** The DS3218SSG Pro digital servos have consistent behavior, so calibration is simpler than with analog servos. You mainly need to set the **zero position** for each servo—the pulse-width-per-degree ratio (7.41) is already configured.
 
 ### 3.1 Safety First
 - [ ] **Detach all legs from the frame** to prevent damage during calibration
 - [ ] Ensure servos are free to move without hitting mechanical limits
+- [ ] Have servo power supply ready (ensure adequate current for 12 servos)
 
-### 3.2 Run Calibration
+### 3.2 Run Enhanced Calibration Tool (Recommended)
+
+The v2 calibration tool provides degree-based movement and visual feedback:
+
 ```bash
 cd ~/rex-zuko-try/quad_ws/src/quad_motors/quad_motors/
-chmod +x servo_calibration.py
-./servo_calibration.py
+chmod +x servo_calibration_v2.py
+./servo_calibration_v2.py
 ```
 
-### 3.3 Calibration Process
+### 3.3 Quick Calibration Process
 
-For each servo (0-11):
+For the DS3218SSG Pro, you primarily need to calibrate the **zero position**:
 
-1. **Select servo:** Type `select <number>` (0-11)
-2. **Set zero position:** 
-   - Move servo to zero position manually or with commands
-   - Type `zero <pulse_width>` (typically 1500, range 500-2500)
-3. **Set pulse width per degree:** Type `ratio <value>` (typically 11.5)
-4. **Set limits:** 
-   - Type `min <degrees>` (e.g., `min -30` for hips)
-   - Type `max <degrees>` (e.g., `max 90` for femurs)
-5. **Invert if needed:** Type `invert` to reverse direction
-6. **Test:** Type a pulse width value (e.g., `1500`) to test movement
+1. **Select servo:** `select 0` (or use `next`/`prev` to navigate)
+2. **Find zero position:** 
+   - Manually position the leg to its neutral stance
+   - Use `+5` or `-10` to adjust by degrees
+   - When aligned, type `set_zero` to mark current position as 0°
+3. **Test the range:** Type `sweep` to automatically test movement
+4. **Repeat** for all 12 servos
 
-### 3.4 Calibration Reference
+### 3.4 Enhanced Calibration Commands
+
+| Command | Description |
+|---------|-------------|
+| `goto 45` | Move to 45 degrees |
+| `+10` / `-5` | Adjust angle by degrees |
+| `center` | Move to 0 degrees |
+| `set_zero` | Mark current position as 0° |
+| `sweep` | Test full range of motion |
+| `test` | Run movement pattern |
+| `zero_all` | Set all servos to zero |
+| `group hips` | Move all hips to center |
+| `help` | Show all commands |
+
+### 3.5 DS3218SSG Pro Specifications
+
+The servo parameters are pre-configured for DS3218SSG Pro:
+- **Pulse Range:** 500-2500 µs
+- **Rotation Range:** 270°
+- **Pulse Per Degree:** 7.41 (already set, no adjustment needed)
+- **Center Pulse:** ~1500 µs (varies slightly per servo)
+
+### 3.6 Joint Limits Reference
 
 Expected joint limits (adjust based on your frame):
 - **Hips (0, 3, 6, 9):** -30° to +30°
-- **Femurs (1, 4, 7, 10):** 0° to 90°
+- **Femurs (1, 4, 7, 10):** 0° to 90°  
 - **Tibias (2, 5, 8, 11):** 0° to 90° (or as needed for linked-leg system)
 
-### 3.5 Verify Calibration File
+### 3.7 Verify Calibration File
 ```bash
 cat ~/rex-zuko-try/quad_ws/src/quad_motors/config/servo_parameters.yaml
-# Verify all values are set correctly
+# Verify all zero_degrees_pulse_width values are set correctly
+```
+
+### 3.8 Legacy Calibration Tool
+
+The original calibration script is still available if needed:
+```bash
+./servo_calibration.py  # Original command-line tool
 ```
 
 ## Step 4: Controller Setup
@@ -386,9 +416,9 @@ source install/local_setup.bash
 # Launch robot
 ros2 launch quad_main quad_live.launch.py
 
-# Calibrate servos
+# Calibrate servos (DS3218SSG Pro optimized)
 cd src/quad_motors/quad_motors/
-./servo_calibration.py
+./servo_calibration_v2.py
 
 # Check I2C
 sudo i2cdetect -y 1
