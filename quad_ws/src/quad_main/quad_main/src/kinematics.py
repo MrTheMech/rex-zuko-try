@@ -290,11 +290,6 @@ class Kinematics:
                 theta2 = theta1 + beta8 + beta7
 
                 # rotate final angle into a the servo calibration orientation
-                # Left tibias (FL=2, BL=8) need negation to produce negative angles
-                # that work with the min=-50, max=0 limits
-                if i == 2 or i == 8:
-                    joint_angles_linked_leg[i] = -(theta2 - np.pi / 2)
-                else:
-                    joint_angles_linked_leg[i] = theta2 - np.pi / 2
+                joint_angles_linked_leg[i] = theta2 - np.pi / 2
                       
         return joint_angles_linked_leg
