@@ -212,8 +212,15 @@ class JoystickInterpreter():
         # Handle mode selection buttons
         self._handle_mode_buttons(buttons)
         
-        # Handle D-Pad movement (always active for JOG mode)
+        # Handle D-Pad movement
         self._handle_dpad_movement(axes)
+        
+        # Auto-switch to JOG mode if D-Pad is pressed
+        if (self.motion_inputs.move_forward or self.motion_inputs.move_backward or 
+            self.motion_inputs.move_left or self.motion_inputs.move_right):
+            if self.motion_inputs.motion_state != MotionState.JOG:
+                self.motion_inputs.motion_state = MotionState.JOG
+                self.current_mode_index = 3  # JOG is index 3 in MODE_CYCLE
         
         # Handle analog sticks based on current mode
         if self.motion_inputs.motion_state == MotionState.POSE:
