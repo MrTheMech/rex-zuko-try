@@ -36,13 +36,13 @@ map_joint_index_to_driver_pin:
 min_degrees:
 - -45  # 0: FL Hip
 - -45  # 1: FL Femur
-- -50  # 2: FL Tibia
+- 0    # 2: FL Tibia (left side positive range)
 - -45  # 3: FR Hip
 - -45  # 4: FR Femur
 - -50  # 5: FR Tibia
 - -45  # 6: BL Hip
 - -45  # 7: BL Femur
-- -50  # 8: BL Tibia
+- 0    # 8: BL Tibia (left side positive range)
 - -45  # 9: BR Hip
 - -45  # 10: BR Femur
 - -50  # 11: BR Tibia
@@ -50,13 +50,13 @@ min_degrees:
 max_degrees:
 - 45  # 0: FL Hip
 - 45  # 1: FL Femur
-- 0   # 2: FL Tibia
+- 50  # 2: FL Tibia (left side positive range)
 - 45  # 3: FR Hip
 - 45  # 4: FR Femur
 - 0   # 5: FR Tibia
 - 45  # 6: BL Hip
 - 45  # 7: BL Femur
-- 0   # 8: BL Tibia
+- 50  # 8: BL Tibia (left side positive range)
 - 45  # 9: BR Hip
 - 45  # 10: BR Femur
 - 0   # 11: BR Tibia
