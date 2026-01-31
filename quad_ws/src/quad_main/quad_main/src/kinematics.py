@@ -158,10 +158,9 @@ class Kinematics:
         z = xyz_coord[2]
         D = self._get_domain(x, y, z)
 
-        if legType == "FR" or legType == "BR":
-            shoulder_direction_offset = -1
-        elif legType == "FL" or legType == "BL":
-            shoulder_direction_offset = 1
+        # All legs use same shoulder direction offset
+        # Left/Right mirroring is handled by servo invert_direction in config
+        shoulder_direction_offset = -1
 
         lower_leg_angle = np.arctan2(-np.sqrt(1 - D**2), D)
         sqrt_component = y**2 + (-z)**2 - self.shoulder_length**2

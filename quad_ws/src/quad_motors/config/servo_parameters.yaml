@@ -3,13 +3,13 @@
 # Pulse width per degree: 7.41 µs/° (270° range = 2000µs travel)
 
 invert_direction:
-- false  # 0: FL Hip
+- true   # 0: FL Hip (inverted - left side)
 - true   # 1: FL Femur (inverted)
 - true   # 2: FL Tibia (inverted)
 - false  # 3: FR Hip
 - true   # 4: FR Femur (inverted)
 - true   # 5: FR Tibia (inverted)
-- false  # 6: BL Hip
+- true   # 6: BL Hip (inverted - left side)
 - true   # 7: BL Femur (inverted)
 - true   # 8: BL Tibia (inverted)
 - false  # 9: BR Hip
