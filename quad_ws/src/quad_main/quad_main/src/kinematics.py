@@ -290,6 +290,10 @@ class Kinematics:
                 theta2 = theta1 + beta8 + beta7
 
                 # rotate final angle into a the servo calibration orientation
-                joint_angles_linked_leg[i] = theta2 - np.pi / 2
+                # Left-side tibias (FL=2, BL=8) are mirrored, so negate the angle
+                if i == 2 or i == 8:  # FL Tibia or BL Tibia
+                    joint_angles_linked_leg[i] = -(theta2 - np.pi / 2)
+                else:  # FR Tibia or BR Tibia (indices 5 and 11)
+                    joint_angles_linked_leg[i] = theta2 - np.pi / 2
                       
         return joint_angles_linked_leg
