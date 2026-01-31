@@ -202,14 +202,19 @@ class JoystickInterpreter():
         elif self.motion_inputs.motion_state == MotionState.JOG:
             self._handle_jog_mode(axes)
         elif self.motion_inputs.motion_state == MotionState.STAND:
-            # In STAND mode, reset orientation to neutral
+            # In STAND mode, reset everything to neutral standing position
+            # Zero position from calibration = standing position
+            self.motion_inputs.pos = np.array([0.0, 0.0, 0.0])
             self.motion_inputs.orn = np.array([0.0, 0.0, 0.0])
             self.motion_inputs.step_length = 0.0
             self.motion_inputs.yaw_rate = 0.0
             self.motion_inputs.lateral_fraction = 0.0
         elif self.motion_inputs.motion_state == MotionState.SIT:
-            # In SIT mode, lower body height
-            self.motion_inputs.pos[2] = self.motion_parameters['pos_z_min']
+            # In SIT mode, lower body significantly and pitch forward slightly
+            # pos_z_min = -0.08 lowers the body, creating a sitting posture
+            self.motion_inputs.pos = np.array([0.0, 0.0, self.motion_parameters['pos_z_min']])
+            # Slight forward pitch for natural sit pose (optional)
+            self.motion_inputs.orn = np.array([0.0, 0.1, 0.0])  # ~5.7° forward pitch
             self.motion_inputs.step_length = 0.0
             self.motion_inputs.yaw_rate = 0.0
             self.motion_inputs.lateral_fraction = 0.0

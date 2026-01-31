@@ -1,35 +1,39 @@
 # Motion parameters and motion input limits
 # Optimized for DS3218SSG Pro servos with calibrated limits
-# Tuned for stable walking, sitting, and standing
+# Robot geometry: height=0.195m, leg length ~0.21m
+# Servo limits: Hips ±45°, Femurs ±45°, Tibias 0-50°/(-50-0)°
 
 # Walking gait parameters
 lateral_fraction: 0.0
-step_velocity: 0.002          # Slightly faster for responsive walking
-swing_period: 0.200           # Time for leg swing phase
-clearance_height: 0.030       # Reduced for smoother gait
-penetration_depth: 0.002      # Slight ground penetration for stability
+step_velocity: 0.003          # Walking speed (m/s for trajectory)
+swing_period: 0.200           # Time for leg swing phase (seconds)
+clearance_height: 0.025       # Foot lift height during swing (meters)
+penetration_depth: 0.001      # Ground contact depth (meters)
 
-# Orientation limits (radians) - approx ±22.5 degrees
-orn_x_min: -0.393
-orn_x_max: 0.393
-orn_y_min: -0.393
-orn_y_max: 0.393
-orn_z_min: -0.393
-orn_z_max: 0.393
+# Orientation limits (radians)
+# Based on hip/femur limits of ±45° = ±0.785 rad
+# Using ~50% of limits for safe operation
+orn_x_min: -0.35              # Roll left limit (~20°)
+orn_x_max: 0.35               # Roll right limit (~20°)
+orn_y_min: -0.35              # Pitch back limit (~20°)
+orn_y_max: 0.35               # Pitch forward limit (~20°)
+orn_z_min: -0.30              # Yaw left limit (~17°)
+orn_z_max: 0.30               # Yaw right limit (~17°)
 
 # Position limits (meters)
-# Adjusted based on robot's height of 0.195m
-pos_x_min: -0.050             # Forward/backward lean
-pos_x_max: 0.050
-pos_y_min: -0.050             # Left/right lean
-pos_y_max: 0.050
-pos_z_min: -0.080             # Squat/sit position (lower by 8cm)
-pos_z_max: 0.040              # Stand taller (raise by 4cm)
+# Based on robot height 0.195m and leg kinematics
+pos_x_min: -0.040             # Lean backward (meters)
+pos_x_max: 0.040              # Lean forward (meters)
+pos_y_min: -0.040             # Lean left (meters)
+pos_y_max: 0.040              # Lean right (meters)
+pos_z_min: -0.070             # SIT position: lower body 7cm
+pos_z_max: 0.030              # TALL position: raise body 3cm
 
-# Yaw rate limits (radians/s)
-yaw_rate_min: -0.500          # Slower turning for stability
-yaw_rate_max:  0.500
+# Yaw rate limits (radians/s) - for turning while walking
+yaw_rate_min: -0.40           # Turn left speed
+yaw_rate_max:  0.40           # Turn right speed
 
-# Step length limits (meters)
-step_length_min: -0.080       # Backward step
-step_length_max: 0.080        # Forward step
+# Step length limits (meters) - forward/backward walking
+step_length_min: -0.060       # Backward step length
+step_length_max: 0.060        # Forward step length
+
