@@ -4,14 +4,14 @@
 
 invert_direction:
 - false  # 0: FL Hip
-- false  # 1: FL Femur
-- false  # 2: FL Tibia
+- true   # 1: FL Femur (inverted)
+- true   # 2: FL Tibia (inverted)
 - false  # 3: FR Hip
 - true   # 4: FR Femur (inverted)
 - true   # 5: FR Tibia (inverted)
 - false  # 6: BL Hip
-- false  # 7: BL Femur
-- false  # 8: BL Tibia
+- true   # 7: BL Femur (inverted)
+- true   # 8: BL Tibia (inverted)
 - false  # 9: BR Hip
 - true   # 10: BR Femur (inverted)
 - true   # 11: BR Tibia (inverted)
