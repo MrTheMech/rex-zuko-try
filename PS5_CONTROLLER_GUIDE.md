@@ -13,8 +13,8 @@ This document describes how to use the PS5 (DualSense) controller to operate the
 │                    PS5 CONTROLLER LAYOUT                        │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│    [L2] Cycle Modes              [R2] (unused)                  │
-│    [L1] (unused)                 [R1] (unused)                  │
+│    [L2] (unused)                    [R2] (unused)                  │
+│    [L1] Cycle Modes             [R1] (unused)                  │
 │                                                                 │
 │    ┌───┐                              [△] POSE Mode             │
 │    │ ↑ │ Forward                                                │
@@ -45,7 +45,7 @@ The robot has **4 modes** that determine its behavior:
 | **JOG** | □ Square | Walking mode. Use D-Pad and sticks to move around. |
 
 ### Cycling Through Modes
-- **L2 Button**: Press to cycle through modes in order: STAND → SIT → POSE → JOG → STAND...
+- **L1 Button**: Press to cycle through modes in order: STAND → SIT → POSE → JOG → STAND...
 
 ---
 
@@ -93,13 +93,13 @@ In POSE mode, the analog sticks control body orientation without walking.
 | **○ Circle** | Switch to SIT mode |
 | **△ Triangle** | Switch to POSE mode |
 | **□ Square** | Switch to JOG mode |
-| **L2** | Cycle through modes (STAND → SIT → POSE → JOG) |
+| **L1** | Cycle through modes (STAND → SIT → POSE → JOG) |
 
 ### Unused Buttons (Reserved for Future)
 
 | Button | Status |
 |--------|--------|
-| L1 | Unused |
+| L2 | Unused |
 | R1 | Unused |
 | R2 | Unused |
 | L3 (Left Stick Click) | Unused |

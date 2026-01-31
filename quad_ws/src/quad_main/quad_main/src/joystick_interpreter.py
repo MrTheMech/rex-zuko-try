@@ -19,7 +19,7 @@
         Triangle (△) = POSE mode - Body orientation control
         Square (□)   = JOG mode - Walking/jogging mode
     
-    L2 BUTTON:
+    L1 BUTTON:
         Press to cycle through modes: STAND → SIT → POSE → JOG → STAND...
     
     ANALOG STICKS (Context-Sensitive):
@@ -46,7 +46,7 @@ from .gamepad_map import AxesMap, ButtonMap
 class JoystickInterpreter():
     """Interprets PS5 controller input into robot motion commands"""
     
-    # Mode cycle order for L2 button
+    # Mode cycle order for L1 button
     MODE_CYCLE = [MotionState.STAND, MotionState.SIT, MotionState.POSE, MotionState.JOG]
     
     def __init__(self, motion_parameters):  
@@ -54,13 +54,13 @@ class JoystickInterpreter():
         self.motion_inputs = MotionInputs()
         
         # Button release flags to prevent repeated triggers
-        self.l2_button_released = True
+        self.l1_button_released = True
         self.cross_button_released = True
         self.circle_button_released = True
         self.triangle_button_released = True
         self.square_button_released = True
         
-        # Track current mode index for L2 cycling
+        # Track current mode index for L1 cycling
         self.current_mode_index = 0
 
     def map(self, n, in_min, in_max, out_min, out_max):
@@ -68,7 +68,7 @@ class JoystickInterpreter():
         return (n - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
     def _handle_mode_buttons(self, buttons):
-        """Handle face buttons for direct mode selection and L2 for cycling"""
+        """Handle face buttons for direct mode selection and L1 for cycling"""
         
         # Cross (X) - STAND mode
         if buttons[ButtonMap.CROSS.value]:
@@ -106,14 +106,14 @@ class JoystickInterpreter():
         else:
             self.square_button_released = True
         
-        # L2 Button - Cycle through modes
-        if buttons[ButtonMap.L2.value]:
-            if self.l2_button_released:
-                self.l2_button_released = False
+        # L1 Button - Cycle through modes
+        if buttons[ButtonMap.L1.value]:
+            if self.l1_button_released:
+                self.l1_button_released = False
                 self.current_mode_index = (self.current_mode_index + 1) % len(self.MODE_CYCLE)
                 self.motion_inputs.motion_state = self.MODE_CYCLE[self.current_mode_index]
         else:
-            self.l2_button_released = True
+            self.l1_button_released = True
 
     def _handle_dpad_movement(self, axes):
         """Handle D-Pad for hold-to-move directional control"""
