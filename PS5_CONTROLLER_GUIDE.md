@@ -13,20 +13,20 @@ This document describes how to use the PS5 (DualSense) controller to operate the
 │                    PS5 CONTROLLER LAYOUT                        │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│    [L2] (unused)                    [R2] (unused)                  │
-│    [L1] Cycle Modes             [R1] (unused)                  │
+│    [L2] (unused)                       [R2] (unused)            │
+│    [L1] Cycle Modes                    [R1] (unused)            │
 │                                                                 │
-│    ┌───┐                              [△] POSE Mode             │
-│    │ ↑ │ Forward                                                │
-│ ┌──┼───┼──┐                      [□]            [○]             │
-│ │← │   │ →│ Strafe              JOG              SIT            │
+│    ┌───┐                                   [△] POSE Mode        │
+│    │ ↑ │                                                        │
+│ ┌──┼───┼──┐  D-Pad                     [□]            [○]       │
+│ │← │   │ →│ (Reserved)                 JOG             SIT      │
 │ └──┼───┼──┘                                                     │
-│    │ ↓ │ Backward                    [✕] STAND Mode             │
+│    │ ↓ │                                   [✕] STAND Mode       │
 │    └───┘                                                        │
 │                                                                 │
-│   [Left Stick]                      [Right Stick]               │
-│   POSE: Roll/Pitch                  POSE: Yaw/Height            │
-│   JOG:  Speed                       JOG:  Turn/Height           │
+│   [Left Stick]                         [Right Stick]            │
+│   POSE: Roll/Pitch                     All: Yaw/Height          │
+│   JOG:  Move/Strafe                    JOG: Turn Rate           │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -42,7 +42,7 @@ The robot has **4 modes** that determine its behavior:
 | **STAND** | ✕ Cross | Default standing position. Robot stands upright with neutral body. |
 | **SIT** | ○ Circle | Sitting/rest position. Robot lowers to a resting stance. |
 | **POSE** | △ Triangle | Body orientation control. Use sticks to tilt and rotate body. |
-| **JOG** | □ Square | Walking mode. Use D-Pad and sticks to move around. |
+| **JOG** | □ Square | Walking mode. Use left stick to move, right stick to turn. |
 
 ### Cycling Through Modes
 - **L1 Button**: Press to cycle through modes in order: STAND → SIT → POSE → JOG → STAND...
@@ -51,22 +51,27 @@ The robot has **4 modes** that determine its behavior:
 
 ## Movement Controls (JOG Mode)
 
-Movement is controlled by the D-Pad using **hold-to-move** - the robot moves only while you hold the button.
+Movement is controlled by the **Left Analog Stick**:
 
-| D-Pad Direction | Movement |
-|-----------------|----------|
-| **Up** | Walk Forward |
-| **Down** | Walk Backward |
-| **Left** | Strafe Left |
-| **Right** | Strafe Right |
+| Left Stick | Movement |
+|------------|----------|
+| **Push Up** | Walk Forward |
+| **Push Down** | Walk Backward |
+| **Push Left** | Strafe Left |
+| **Push Right** | Strafe Right |
+| **Diagonal** | Combined movement (e.g., forward-left) |
 
-### Analog Stick Controls in JOG Mode
+### Right Stick Controls in JOG Mode
 
 | Control | Action |
 |---------|--------|
-| **Left Stick Y** | Fine speed control (step length) |
 | **Right Stick X** | Turn rate (yaw) while walking |
 | **Right Stick Y** | Body height adjustment |
+
+### Movement Tips
+- The left stick provides proportional control - push gently for slow movement, fully for maximum speed
+- A small deadzone prevents accidental movement from stick drift
+- You can combine forward/backward with strafing for diagonal movement
 
 ---
 
@@ -99,6 +104,7 @@ In POSE mode, the analog sticks control body orientation without walking.
 
 | Button | Status |
 |--------|--------|
+| D-Pad | Reserved |
 | L2 | Unused |
 | R1 | Unused |
 | R2 | Unused |
@@ -133,8 +139,8 @@ In POSE mode, the analog sticks control body orientation without walking.
 
 5. **Try JOG mode**
    - Press □ (Square) to enter JOG mode
-   - Hold D-Pad Up to walk forward
-   - Use right stick to turn while walking
+   - Push left stick up to walk forward
+   - Use right stick X-axis to turn while walking
 
 6. **Rest the robot**
    - Press ○ (Circle) to enter SIT mode
@@ -157,9 +163,13 @@ In POSE mode, the analog sticks control body orientation without walking.
    ```
 2. Check that the correct mode is active
 
+### Stick Drift
+- A 10% deadzone is applied to prevent drift
+- If you still experience drift, recalibrate your controller
+
 ### Unexpected Behavior
 1. Press ✕ (Cross) to reset to STAND mode
-2. Release all sticks and D-Pad buttons
+2. Release all sticks
 
 ---
 
@@ -169,6 +179,7 @@ In POSE mode, the analog sticks control body orientation without walking.
 - `quad_main/src/motion_inputs.py` - Motion states and data class
 - `quad_main/src/joystick_interpreter.py` - Controller input processing
 - `quad_main/src/gamepad_map.py` - Button/axis index mapping
+- `quad_motors/config/servo_parameters.yaml` - Servo calibration
 
 ### Motion States (Enum)
 ```python
@@ -177,6 +188,19 @@ class MotionState(Enum):
     SIT = 2    # Sitting/rest position
     POSE = 3   # Body orientation control
     JOG = 4    # Walking mode
+```
+
+### Axis Mapping (Index Values)
+```python
+class AxesMap(Enum):
+    LEFT_X = 0    # Left stick horizontal
+    LEFT_Y = 1    # Left stick vertical
+    L2 = 2        # L2 trigger
+    RIGHT_X = 3   # Right stick horizontal
+    RIGHT_Y = 4   # Right stick vertical
+    R2 = 5        # R2 trigger
+    DPAD_X = 6    # D-Pad horizontal
+    DPAD_Y = 7    # D-Pad vertical
 ```
 
 ### Button Mapping (Index Values)
@@ -199,4 +223,4 @@ class ButtonMap(Enum):
 
 ---
 
-*Last Updated: January 31, 2026*
+*Last Updated: February 1, 2026*

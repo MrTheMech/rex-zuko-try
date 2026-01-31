@@ -7,11 +7,13 @@
     CONTROL SCHEME:
     ===============
     
-    D-PAD (Hold-to-Move):
-        Up    = Move Forward
-        Down  = Move Backward
-        Left  = Strafe Left
-        Right = Strafe Right
+    LEFT ANALOG STICK (Movement - JOG Mode):
+        Up/Down   = Walk Forward/Backward
+        Left/Right = Strafe Left/Right
+    
+    RIGHT ANALOG STICK (Always Active):
+        X-axis = Turn rate (yaw) while walking
+        Y-axis = Body height adjustment
     
     FACE BUTTONS (Direct Mode Selection):
         Cross (X)    = STAND mode - Default standing position
@@ -22,17 +24,13 @@
     L1 BUTTON:
         Press to cycle through modes: STAND → SIT → POSE → JOG → STAND...
     
-    ANALOG STICKS (Context-Sensitive):
-        In POSE mode:
-            Left Stick X  = Roll (body tilt left/right)
-            Left Stick Y  = Pitch (body tilt forward/back)
-            Right Stick X = Yaw (body rotation)
-            Right Stick Y = Height (body up/down)
-        
-        In JOG mode:
-            Left Stick Y  = Speed/Step Length
-            Right Stick X = Turn Rate (yaw rate)
-            Right Stick Y = Height
+    ANALOG STICKS IN POSE MODE:
+        Left Stick X  = Roll (body tilt left/right)
+        Left Stick Y  = Pitch (body tilt forward/back)
+        Right Stick X = Yaw (body rotation)
+        Right Stick Y = Height (body up/down)
+    
+    D-PAD (Reserved for future use)
     
     Button map derived from Controllers.py in quad_gamepad/quad_gamepad/src
 '''
@@ -48,6 +46,9 @@ class JoystickInterpreter():
     
     # Mode cycle order for L1 button
     MODE_CYCLE = [MotionState.STAND, MotionState.SIT, MotionState.POSE, MotionState.JOG]
+    
+    # Deadzone for analog sticks (helps prevent drift)
+    STICK_DEADZONE = 0.1
     
     def __init__(self, motion_parameters):  
         self.motion_parameters = motion_parameters      
@@ -66,6 +67,16 @@ class JoystickInterpreter():
     def map(self, n, in_min, in_max, out_min, out_max):
         """Map a value from one range to another"""
         return (n - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+    
+    def apply_deadzone(self, value, deadzone=None):
+        """Apply deadzone to eliminate stick drift"""
+        if deadzone is None:
+            deadzone = self.STICK_DEADZONE
+        if abs(value) < deadzone:
+            return 0.0
+        # Scale the remaining range to 0-1
+        sign = 1 if value > 0 else -1
+        return sign * (abs(value) - deadzone) / (1.0 - deadzone)
 
     def _handle_mode_buttons(self, buttons):
         """Handle face buttons for direct mode selection and L1 for cycling"""
@@ -115,91 +126,64 @@ class JoystickInterpreter():
         else:
             self.l1_button_released = True
 
-    def _handle_dpad_movement(self, axes):
-        """Handle D-Pad for hold-to-move directional control"""
-        
-        # D-Pad X axis: -1 = Left, 1 = Right, 0 = None
-        # D-Pad Y axis: -1 = Up, 1 = Down, 0 = None
-        dpad_x = axes[AxesMap.DPAD_X.value]
-        dpad_y = axes[AxesMap.DPAD_Y.value]
-        
-        # Reset movement flags
-        self.motion_inputs.move_forward = False
-        self.motion_inputs.move_backward = False
-        self.motion_inputs.move_left = False
-        self.motion_inputs.move_right = False
-        
-        # Set movement flags based on D-Pad (hold-to-move)
-        if dpad_y < -0.5:  # Up pressed
-            self.motion_inputs.move_forward = True
-        elif dpad_y > 0.5:  # Down pressed
-            self.motion_inputs.move_backward = True
-            
-        if dpad_x < -0.5:  # Left pressed
-            self.motion_inputs.move_left = True
-        elif dpad_x > 0.5:  # Right pressed
-            self.motion_inputs.move_right = True
-
     def _handle_pose_mode(self, axes):
         """Handle analog sticks in POSE mode - control body orientation"""
         
         # Left Stick X = Roll (inverted)
+        left_x = self.apply_deadzone(axes[AxesMap.LEFT_X.value])
         self.motion_inputs.orn[0] = -self.map(
-            axes[AxesMap.LEFT_X.value], -1, 1, 
+            left_x, -1, 1, 
             self.motion_parameters['orn_x_min'], 
             self.motion_parameters['orn_x_max'])
         
         # Left Stick Y = Pitch
+        left_y = self.apply_deadzone(axes[AxesMap.LEFT_Y.value])
         self.motion_inputs.orn[1] = self.map(
-            axes[AxesMap.LEFT_Y.value], -1, 1, 
+            left_y, -1, 1, 
             self.motion_parameters['orn_y_min'], 
             self.motion_parameters['orn_y_max'])
         
         # Right Stick X = Yaw
+        right_x = self.apply_deadzone(axes[AxesMap.RIGHT_X.value])
         self.motion_inputs.orn[2] = self.map(
-            axes[AxesMap.RIGHT_X.value], -1, 1, 
+            right_x, -1, 1, 
             self.motion_parameters['orn_z_min'], 
             self.motion_parameters['orn_z_max'])
         
         # Right Stick Y = Height (inverted)
+        right_y = self.apply_deadzone(axes[AxesMap.RIGHT_Y.value])
         self.motion_inputs.pos[2] = -self.map(
-            axes[AxesMap.RIGHT_Y.value], -1, 1, 
+            right_y, -1, 1, 
             self.motion_parameters['pos_z_min'], 
             self.motion_parameters['pos_z_max'])
 
     def _handle_jog_mode(self, axes):
-        """Handle analog sticks in JOG mode - control walking"""
+        """Handle analog sticks in JOG mode - control walking with left stick"""
         
-        # Left Stick Y = Step length (forward/backward speed)
+        # LEFT STICK Y = Forward/Backward movement (step length)
+        left_y = self.apply_deadzone(axes[AxesMap.LEFT_Y.value])
         self.motion_inputs.step_length = self.map(
-            axes[AxesMap.LEFT_Y.value], -1, 1, 
+            left_y, -1, 1, 
             self.motion_parameters['step_length_min'], 
             self.motion_parameters['step_length_max'])
         
-        # Right Stick X = Yaw rate (turning)
+        # LEFT STICK X = Strafe Left/Right (lateral fraction)
+        left_x = self.apply_deadzone(axes[AxesMap.LEFT_X.value])
+        self.motion_inputs.lateral_fraction = left_x  # -1 = left, 1 = right
+        
+        # RIGHT STICK X = Yaw rate (turning)
+        right_x = self.apply_deadzone(axes[AxesMap.RIGHT_X.value])
         self.motion_inputs.yaw_rate = self.map(
-            axes[AxesMap.RIGHT_X.value], -1, 1, 
+            right_x, -1, 1, 
             self.motion_parameters['yaw_rate_min'], 
             self.motion_parameters['yaw_rate_max'])
         
-        # Right Stick Y = Height (inverted)
+        # RIGHT STICK Y = Height (inverted)
+        right_y = self.apply_deadzone(axes[AxesMap.RIGHT_Y.value])
         self.motion_inputs.pos[2] = -self.map(
-            axes[AxesMap.RIGHT_Y.value], -1, 1, 
+            right_y, -1, 1, 
             self.motion_parameters['pos_z_min'], 
             self.motion_parameters['pos_z_max'])
-        
-        # Apply D-Pad movement to step length and lateral fraction
-        if self.motion_inputs.move_forward:
-            self.motion_inputs.step_length = self.motion_parameters['step_length_max']
-        elif self.motion_inputs.move_backward:
-            self.motion_inputs.step_length = self.motion_parameters['step_length_min']
-        
-        if self.motion_inputs.move_left:
-            self.motion_inputs.lateral_fraction = -1.0  # Strafe left
-        elif self.motion_inputs.move_right:
-            self.motion_inputs.lateral_fraction = 1.0   # Strafe right
-        else:
-            self.motion_inputs.lateral_fraction = 0.0
 
     def get_motion_inputs(self, axes, buttons):
         """Main method to process controller input and return motion commands"""
@@ -211,16 +195,6 @@ class JoystickInterpreter():
         
         # Handle mode selection buttons
         self._handle_mode_buttons(buttons)
-        
-        # Handle D-Pad movement
-        self._handle_dpad_movement(axes)
-        
-        # Auto-switch to JOG mode if D-Pad is pressed
-        if (self.motion_inputs.move_forward or self.motion_inputs.move_backward or 
-            self.motion_inputs.move_left or self.motion_inputs.move_right):
-            if self.motion_inputs.motion_state != MotionState.JOG:
-                self.motion_inputs.motion_state = MotionState.JOG
-                self.current_mode_index = 3  # JOG is index 3 in MODE_CYCLE
         
         # Handle analog sticks based on current mode
         if self.motion_inputs.motion_state == MotionState.POSE:

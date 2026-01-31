@@ -2,7 +2,7 @@
     Data class containing motion parameters controlling
     the quadruped's movement and states.
     
-    Updated for PS5 controller with full button utilization.
+    Updated for PS5 controller with joystick-based movement controls.
 """
 
 import numpy as np
@@ -12,7 +12,7 @@ from enum import Enum
 
 
 class MotionState(Enum):
-    """Robot motion states controlled by face buttons and L2 cycle"""
+    """Robot motion states controlled by face buttons and L1 cycle"""
     STAND = 1    # Default standing position (Cross button)
     SIT = 2      # Sitting/rest position (Circle button)
     POSE = 3     # Body orientation control mode (Triangle button)
@@ -31,12 +31,6 @@ class MotionInputs:
     orn: np.ndarray = field(default_factory=lambda: np.array([0.0, 0.0, 0.0]))
     
     # Movement parameters (for JOG mode)
-    step_length: float = 0.0      # Forward/backward movement
-    lateral_fraction: float = 0.0  # Left/right strafing
-    yaw_rate: float = 0.0         # Turning rate
-    
-    # D-Pad movement direction flags (hold-to-move)
-    move_forward: bool = False
-    move_backward: bool = False
-    move_left: bool = False
-    move_right: bool = False  
+    step_length: float = 0.0       # Forward/backward movement (Left Stick Y)
+    lateral_fraction: float = 0.0  # Left/right strafing (Left Stick X)
+    yaw_rate: float = 0.0          # Turning rate (Right Stick X)

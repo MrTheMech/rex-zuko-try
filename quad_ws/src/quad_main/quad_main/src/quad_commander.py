@@ -19,7 +19,7 @@ class QuadCommander():
         orn = motion_inputs.orn
         step_length = motion_inputs.step_length        
         yaw_rate = motion_inputs.yaw_rate
-        lateral_fraction = motion_inputs.lateral_fraction  # Now from joystick D-Pad
+        lateral_fraction = motion_inputs.lateral_fraction  # From left stick X-axis
     
         step_velocity = self.motion_parameters['step_velocity']
         clearance_height = self.motion_parameters['clearance_height']     

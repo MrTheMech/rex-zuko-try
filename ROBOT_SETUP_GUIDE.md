@@ -224,9 +224,8 @@ jstest-gtk
 | **○ Circle** | SIT mode |
 | **△ Triangle** | POSE mode (body control) |
 | **□ Square** | JOG mode (walking) |
-| **L2** | Cycle through modes |
-| **D-Pad** | Movement (hold-to-move in JOG) |
-| **Left Stick** | Orientation/Speed |
+| **L1** | Cycle through modes |
+| **Left Stick** | Movement (JOG) / Orientation (POSE) |
 | **Right Stick** | Yaw/Height |
 
 ## Step 5: First Test Run
