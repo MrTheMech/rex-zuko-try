@@ -158,9 +158,13 @@ class Kinematics:
         z = xyz_coord[2]
         D = self._get_domain(x, y, z)
 
-        # All legs use same shoulder direction offset
-        # Left/Right mirroring is handled by servo invert_direction in config
-        shoulder_direction_offset = -1
+        # Shoulder direction offset for geometric mirroring
+        # Right legs have shoulder offset in negative Y direction
+        # Left legs have shoulder offset in positive Y direction
+        if legType == "FR" or legType == "BR":
+            shoulder_direction_offset = -1
+        else:  # FL or BL
+            shoulder_direction_offset = 1
 
         lower_leg_angle = np.arctan2(-np.sqrt(1 - D**2), D)
         sqrt_component = y**2 + (-z)**2 - self.shoulder_length**2
@@ -175,8 +179,15 @@ class Kinematics:
             self.lower_leg_length * np.sin(lower_leg_angle),
             self.upper_leg_length + self.lower_leg_length * np.cos(lower_leg_angle))
    
-        joint_angles = np.array(
-            [-shoulder_angle, upper_leg_angle, lower_leg_angle])
+        # For left side legs, negate upper and lower leg angles to mirror right side
+        # This compensates for the fact that right side servos are inverted in config
+        # but left side are not (they are physically mirror-mounted)
+        if legType == "FL" or legType == "BL":
+            joint_angles = np.array(
+                [-shoulder_angle, -upper_leg_angle, -lower_leg_angle])
+        else:
+            joint_angles = np.array(
+                [-shoulder_angle, upper_leg_angle, lower_leg_angle])
 
         return joint_angles
 

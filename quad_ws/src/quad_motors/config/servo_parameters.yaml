@@ -2,19 +2,21 @@
 # Calibrated: 2026-02-01
 # Pulse width per degree: 7.41 µs/° (270° range = 2000µs travel)
 
+# IMPORTANT: Right side femur/tibia are inverted because they are mirror-mounted
+# The kinematics handles left/right geometric differences via shoulder_direction_offset
 invert_direction:
-- true   # 0: FL Hip (inverted - left side)
-- true   # 1: FL Femur (inverted)
-- true   # 2: FL Tibia (inverted)
+- false  # 0: FL Hip
+- false  # 1: FL Femur
+- false  # 2: FL Tibia
 - false  # 3: FR Hip
-- true   # 4: FR Femur (inverted)
-- true   # 5: FR Tibia (inverted)
-- true   # 6: BL Hip (inverted - left side)
-- true   # 7: BL Femur (inverted)
-- true   # 8: BL Tibia (inverted)
+- true   # 4: FR Femur (inverted - right side)
+- true   # 5: FR Tibia (inverted - right side)
+- false  # 6: BL Hip
+- false  # 7: BL Femur
+- false  # 8: BL Tibia
 - false  # 9: BR Hip
-- true   # 10: BR Femur (inverted)
-- true   # 11: BR Tibia (inverted)
+- true   # 10: BR Femur (inverted - right side)
+- true   # 11: BR Tibia (inverted - right side)
 
 map_joint_index_to_driver_pin:
 - 4   # Joint 0: FL Hip -> PIN4
