@@ -7,13 +7,13 @@
 invert_direction:
 - false  # 0: FL Hip
 - false  # 1: FL Femur
-- false  # 2: FL Tibia
+- true   # 2: FL Tibia (inverted - mirror mount)
 - false  # 3: FR Hip
 - true   # 4: FR Femur (inverted - right side)
 - true   # 5: FR Tibia (inverted - right side)
 - false  # 6: BL Hip
 - false  # 7: BL Femur
-- false  # 8: BL Tibia
+- true   # 8: BL Tibia (inverted - mirror mount)
 - false  # 9: BR Hip
 - true   # 10: BR Femur (inverted - right side)
 - true   # 11: BR Tibia (inverted - right side)
@@ -36,13 +36,13 @@ map_joint_index_to_driver_pin:
 min_degrees:
 - -45  # 0: FL Hip
 - -45  # 1: FL Femur
-- 0    # 2: FL Tibia (left side positive range)
+- -50  # 2: FL Tibia
 - -45  # 3: FR Hip
 - -45  # 4: FR Femur
 - -50  # 5: FR Tibia
 - -45  # 6: BL Hip
 - -45  # 7: BL Femur
-- 0    # 8: BL Tibia (left side positive range)
+- -50  # 8: BL Tibia
 - -45  # 9: BR Hip
 - -45  # 10: BR Femur
 - -50  # 11: BR Tibia
@@ -50,13 +50,13 @@ min_degrees:
 max_degrees:
 - 45  # 0: FL Hip
 - 45  # 1: FL Femur
-- 50  # 2: FL Tibia (left side positive range)
+- 0   # 2: FL Tibia
 - 45  # 3: FR Hip
 - 45  # 4: FR Femur
 - 0   # 5: FR Tibia
 - 45  # 6: BL Hip
 - 45  # 7: BL Femur
-- 50  # 8: BL Tibia (left side positive range)
+- 0   # 8: BL Tibia
 - 45  # 9: BR Hip
 - 45  # 10: BR Femur
 - 0   # 11: BR Tibia
