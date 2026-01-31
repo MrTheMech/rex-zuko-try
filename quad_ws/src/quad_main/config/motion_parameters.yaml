@@ -1,12 +1,15 @@
 # Motion parameters and motion input limits
-# Derived by trial and error for stability and physical limit breach prevention
+# Optimized for DS3218SSG Pro servos with calibrated limits
+# Tuned for stable walking, sitting, and standing
 
+# Walking gait parameters
 lateral_fraction: 0.0
-step_velocity: 0.001
-swing_period: 0.200
-clearance_height: 0.045
-penetration_depth: 0.003
+step_velocity: 0.002          # Slightly faster for responsive walking
+swing_period: 0.200           # Time for leg swing phase
+clearance_height: 0.030       # Reduced for smoother gait
+penetration_depth: 0.002      # Slight ground penetration for stability
 
+# Orientation limits (radians) - approx ±22.5 degrees
 orn_x_min: -0.393
 orn_x_max: 0.393
 orn_y_min: -0.393
@@ -14,15 +17,19 @@ orn_y_max: 0.393
 orn_z_min: -0.393
 orn_z_max: 0.393
 
-pos_x_min: -0.100
-pos_x_max: 0.100
-pos_y_min: -0.100
-pos_y_max: 0.100
-pos_z_min: -0.125 
-pos_z_max: 0.070
+# Position limits (meters)
+# Adjusted based on robot's height of 0.195m
+pos_x_min: -0.050             # Forward/backward lean
+pos_x_max: 0.050
+pos_y_min: -0.050             # Left/right lean
+pos_y_max: 0.050
+pos_z_min: -0.080             # Squat/sit position (lower by 8cm)
+pos_z_max: 0.040              # Stand taller (raise by 4cm)
 
-yaw_rate_min: -0.785
-yaw_rate_max:  0.785
+# Yaw rate limits (radians/s)
+yaw_rate_min: -0.500          # Slower turning for stability
+yaw_rate_max:  0.500
 
-step_length_min: -0.100
-step_length_max: 0.100
+# Step length limits (meters)
+step_length_min: -0.080       # Backward step
+step_length_max: 0.080        # Forward step
