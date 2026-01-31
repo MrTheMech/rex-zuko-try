@@ -12,7 +12,7 @@ Before starting, ensure you have:
 - [ ] PCA9685 servo driver board (I2C address 0x40)
 - [ ] 12 RC servos connected to PCA9685 according to pin layout
 - [ ] Power supply for servos
-- [ ] PS4 controller (wired or wireless)
+- [ ] PS5/PS4 controller (wired or wireless) - See **PS5_CONTROLLER_GUIDE.md**
 - [ ] Network connection (Ethernet or Wi-Fi)
 - [ ] Assembled Zuko frame v2.2
 
@@ -190,8 +190,10 @@ The original calibration script is still available if needed:
 
 ## Step 4: Controller Setup
 
+> 📖 **See [PS5_CONTROLLER_GUIDE.md](PS5_CONTROLLER_GUIDE.md) for full control scheme documentation.**
+
 ### 4.1 Wired Controller
-- Simply connect PS4 controller via USB
+- Connect PS5/PS4 controller via USB
 - Verify detection: `ls /dev/input/js*`
 
 ### 4.2 Wireless Controller (Optional)
@@ -201,7 +203,7 @@ sudo reboot
 sudo bluetoothctl
 # In bluetoothctl:
 scan on
-# Put controller in pairing mode (Share + PS buttons)
+# Put controller in pairing mode (Share + PS buttons for PS4, Create + PS for PS5)
 connect <MAC_ADDRESS>
 trust <MAC_ADDRESS>
 exit
@@ -213,6 +215,19 @@ sudo apt install jstest-gtk -y
 jstest-gtk
 # Test all buttons and axes
 ```
+
+### 4.4 Control Scheme Summary
+
+| Control | Action |
+|---------|--------|
+| **✕ Cross** | STAND mode |
+| **○ Circle** | SIT mode |
+| **△ Triangle** | POSE mode (body control) |
+| **□ Square** | JOG mode (walking) |
+| **L2** | Cycle through modes |
+| **D-Pad** | Movement (hold-to-move in JOG) |
+| **Left Stick** | Orientation/Speed |
+| **Right Stick** | Yaw/Height |
 
 ## Step 5: First Test Run
 
@@ -439,6 +454,7 @@ ros2 topic echo /joy
 
 - Project Overview: See `PROJECT_OVERVIEW.md`
 - Installation Guide: See `INSTALL_RPI.md`
+- Controller Guide: See `PS5_CONTROLLER_GUIDE.md`
 - Pin Mapping: See `quad_ws/src/quad_motors/PIN_MAPPING.md`
 - Development Notes: See `quad_ws/dev-notes/`
 
